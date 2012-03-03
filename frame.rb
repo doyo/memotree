@@ -42,22 +42,16 @@ class TreeNode
             raise "Can't have two heads"
         end
 
-        print self; #DEBUG
-        puts;
-        
         # remove first 
         src = @parent.children.index(self);
         @parent.children.delete_at(src);
-
-        print src; #DEBUG
-        puts;
 
         # copy first
         dest = target.parent.children.index(target);
         target.parent.children.insert(dest + 1, self);
 
         # adjust parent
-        @parent = target;
+        @parent = target.parent;
     end
     
     def move_under(target)
@@ -123,7 +117,7 @@ if __FILE__ == $0
     a21.rename("a21");
 
     a2.move_nextto(a);
-    a2.move_nextto(c);
+    a2.move_under(c);
 
     TreeNode._traverse(head, 0);
 end
