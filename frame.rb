@@ -1,9 +1,9 @@
 #!/usr/bin/env ruby
 
 class TreeNode
-    attr_reader :name, :children, :parent
+    attr_reader :name, :children, :parent, :index
 
-    def initialize(name, parent = nil)
+    def initialize(name)
         @name = name
         @children = []
         @parent = parent
@@ -24,7 +24,7 @@ class TreeNode
     end
 
     def spawn(name, pos = -1)
-        child = TreeNode.new(name, self);
+        child = TreeNode.new(name);
         @children.insert(pos, child)
         child
     end
@@ -33,13 +33,13 @@ class TreeNode
         @name = name
     end
 
-    def move_nextto(target)
-        
+    def move_after(target)
+        target_parent = target.parent;
     end
-    def move_nextto(target)
+    def move_before(target)
         raise "Not implemented yet.";
     end
-    def move_nextto(target)
+    def move_under(target)
         raise "Not implemented yet.";
     end
 end
@@ -87,6 +87,8 @@ if __FILE__ == $0
         c2 = c.spawn("c2");
 
     a21.rename("a21");
+
+    a2.move_after(c1);
 
     TreeNode._traverse(head, 0);
 end
