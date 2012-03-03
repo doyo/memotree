@@ -34,13 +34,47 @@ class TreeNode
     end
 
     def move_nextto(target)
+        if (@parent == nil)
+            return nil;
+        end
+
+        if (target.parent == nil)
+            raise "Can't have two heads"
+        end
+
+        print self; #DEBUG
+        puts;
         
+        # remove first 
+        src = @parent.children.index(self);
+        @parent.children.delete_at(src);
+
+        print src; #DEBUG
+        puts;
+
+        # copy first
+        dest = target.parent.children.index(target);
+        target.parent.children.insert(dest + 1, self);
+
+        # adjust parent
+        @parent = target;
     end
-    def move_nextto(target)
-        raise "Not implemented yet.";
-    end
-    def move_nextto(target)
-        raise "Not implemented yet.";
+    
+    def move_under(target)
+        if (@parent == nil)
+            return nil;
+        end
+
+        src = @parent.children.index(self);
+
+        # copy first
+        target.children.insert(0, self);
+
+        # remove deprecated
+        @parent.children.delete_at(src);
+
+        # adjust parent
+        @parent = target;
     end
 end
 
@@ -54,7 +88,7 @@ class MindTree
         node = TreeNode.new(@id)
 
         fname = "data/#{@id}.txt"
-        if File.readable? (fname)
+        if File.readable?(fname)
             f = File.new(fname)
             while (line = f.gets)
             
@@ -87,6 +121,9 @@ if __FILE__ == $0
         c2 = c.spawn("c2");
 
     a21.rename("a21");
+
+    a2.move_nextto(a);
+    a2.move_nextto(c);
 
     TreeNode._traverse(head, 0);
 end
